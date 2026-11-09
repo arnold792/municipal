@@ -24,23 +24,39 @@ import {
   demoStatusDistribution,
 } from "@/lib/demo/data";
 
-const STATUS_COLORS = ["#7C5CFC", "#EF4444", "#F59E0B", "#10B981", "#A78BFA", "#94A3B8"];
-const SECTOR_COLORS = ["#7C5CFC", "#8B5CF6", "#6366F1", "#06B6D4", "#10B981", "#F59E0B", "#EC4899"];
+const STATUS_COLORS = ["#059669", "#DC2626", "#D97706", "#0284C7", "#76777d", "#565e74"];
+const SECTOR_COLORS = [
+  "#0284C7",
+  "#006c4a",
+  "#D97706",
+  "#131b2e",
+  "#68dba9",
+  "#059669",
+  "#DC2626",
+  "#565e74",
+];
 
 function ChartCard({
   title,
   description,
   children,
+  action,
 }: {
   title: string;
   description: string;
   children: React.ReactNode;
+  action?: React.ReactNode;
 }) {
   return (
-    <Card className="overflow-hidden">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+    <Card className="overflow-hidden rounded-lg border-0 shadow-card">
+      <CardHeader className="flex-row items-start justify-between space-y-0">
+        <div>
+          <CardTitle className="font-display text-lg font-semibold tracking-tight">
+            {title}
+          </CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </div>
+        {action}
       </CardHeader>
       <CardContent className="h-[260px] pt-0">{children}</CardContent>
     </Card>
@@ -49,7 +65,7 @@ function ChartCard({
 
 export function DashboardCharts() {
   return (
-    <div className="grid gap-4 xl:grid-cols-2">
+    <div className="grid gap-5 xl:grid-cols-2">
       <ChartCard
         title="Projects by status"
         description="Demonstration distribution across the project register"
@@ -62,7 +78,7 @@ export function DashboardCharts() {
               nameKey="status"
               innerRadius={55}
               outerRadius={90}
-              paddingAngle={3}
+              paddingAngle={2}
             >
               {demoStatusDistribution.map((entry, index) => (
                 <Cell
@@ -84,16 +100,12 @@ export function DashboardCharts() {
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={demoProgressTrend}>
             <defs>
-              <linearGradient id="plannedFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#A78BFA" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#A78BFA" stopOpacity={0} />
-              </linearGradient>
               <linearGradient id="actualFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#7C5CFC" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#7C5CFC" stopOpacity={0} />
+                <stop offset="0%" stopColor="#006c4a" stopOpacity={0.25} />
+                <stop offset="100%" stopColor="#006c4a" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
             <XAxis dataKey="month" tick={{ fontSize: 12 }} />
             <YAxis tick={{ fontSize: 12 }} unit="%" />
             <Tooltip />
@@ -101,16 +113,17 @@ export function DashboardCharts() {
             <Area
               type="monotone"
               dataKey="planned"
-              stroke="#A78BFA"
-              fill="url(#plannedFill)"
-              strokeWidth={2}
+              stroke="#76777d"
+              fill="transparent"
+              strokeWidth={1.5}
+              strokeDasharray="4 4"
             />
             <Area
               type="monotone"
               dataKey="actual"
-              stroke="#7C5CFC"
+              stroke="#006c4a"
               fill="url(#actualFill)"
-              strokeWidth={2}
+              strokeWidth={2.5}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -122,14 +135,21 @@ export function DashboardCharts() {
       >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={demoBudgetUtilization}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-            <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-18} textAnchor="end" height={60} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+            <XAxis
+              dataKey="name"
+              tick={{ fontSize: 10 }}
+              interval={0}
+              angle={-18}
+              textAnchor="end"
+              height={60}
+            />
             <YAxis tick={{ fontSize: 12 }} />
             <Tooltip />
             <Legend />
-            <Bar dataKey="approved" fill="#DDD6FE" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="commitments" fill="#A78BFA" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="expenditure" fill="#7C5CFC" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="approved" fill="#dce9ff" radius={[2, 2, 0, 0]} />
+            <Bar dataKey="commitments" fill="#0284C7" radius={[2, 2, 0, 0]} />
+            <Bar dataKey="expenditure" fill="#006c4a" radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -140,16 +160,11 @@ export function DashboardCharts() {
       >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={demoSectorDistribution} layout="vertical" margin={{ left: 24 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
             <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12 }} />
-            <YAxis
-              type="category"
-              dataKey="sector"
-              width={120}
-              tick={{ fontSize: 11 }}
-            />
+            <YAxis type="category" dataKey="sector" width={120} tick={{ fontSize: 11 }} />
             <Tooltip />
-            <Bar dataKey="count" radius={[0, 6, 6, 0]}>
+            <Bar dataKey="count" radius={[0, 4, 4, 0]}>
               {demoSectorDistribution.map((entry, index) => (
                 <Cell
                   key={entry.sector}
@@ -167,14 +182,14 @@ export function DashboardCharts() {
       >
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={demoMonthlyPerformance}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
             <XAxis dataKey="month" tick={{ fontSize: 12 }} />
             <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
             <Tooltip />
             <Legend />
-            <Bar dataKey="milestones" fill="#7C5CFC" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="inspections" fill="#06B6D4" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="issuesClosed" fill="#10B981" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="milestones" fill="#131b2e" radius={[2, 2, 0, 0]} />
+            <Bar dataKey="inspections" fill="#0284C7" radius={[2, 2, 0, 0]} />
+            <Bar dataKey="issuesClosed" fill="#006c4a" radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -191,7 +206,13 @@ export function DashboardCharts() {
               actual: Math.round(row.actual * 3.1),
             }))}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+            <defs>
+              <linearGradient id="expFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#0284C7" stopOpacity={0.2} />
+                <stop offset="100%" stopColor="#0284C7" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
             <XAxis dataKey="month" tick={{ fontSize: 12 }} />
             <YAxis tick={{ fontSize: 12 }} unit="M" />
             <Tooltip />
@@ -199,16 +220,17 @@ export function DashboardCharts() {
             <Area
               type="monotone"
               dataKey="planned"
-              stroke="#94A3B8"
-              fill="#E2E8F0"
-              strokeWidth={2}
+              stroke="#76777d"
+              fill="transparent"
+              strokeWidth={1.5}
+              strokeDasharray="4 4"
             />
             <Area
               type="monotone"
               dataKey="actual"
-              stroke="#7C5CFC"
-              fill="#EDE9FE"
-              strokeWidth={2}
+              stroke="#0284C7"
+              fill="url(#expFill)"
+              strokeWidth={2.5}
             />
           </AreaChart>
         </ResponsiveContainer>

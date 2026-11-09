@@ -1,35 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #f4f5f8;
+  --canvas: #f8f9ff;
   --background: #ffffff;
-  --foreground: #1f2430;
+  --foreground: #0b1c30;
   --card: #ffffff;
-  --card-foreground: #1f2430;
+  --card-foreground: #0b1c30;
   --popover: #ffffff;
-  --popover-foreground: #1f2430;
-  --primary: #7c5cfc;
+  --popover-foreground: #0b1c30;
+  --primary: #131b2e;
   --primary-foreground: #ffffff;
-  --secondary: #f3f0ff;
-  --secondary-foreground: #4c3ab5;
-  --muted: #f1f3f7;
-  --muted-foreground: #667085;
-  --accent: #efeaff;
-  --accent-foreground: #5b45d6;
-  --border: #e4e7ec;
-  --input: #e4e7ec;
-  --ring: #7c5cfc;
-  --success: #12b76a;
-  --warning: #f79009;
-  --warning-foreground: #b54708;
-  --danger: #f04438;
-  --sidebar: #1b1535;
-  --sidebar-foreground: #f8f7ff;
+  --secondary: #006c4a;
+  --secondary-foreground: #ffffff;
+  --muted: #eff4ff;
+  --muted-foreground: #45464d;
+  --accent: #e5eeff;
+  --accent-foreground: #0b1c30;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #006c4a;
+  --success: #059669;
+  --info: #0284c7;
+  --warning: #d97706;
+  --warning-foreground: #d97706;
+  --danger: #dc2626;
+  --sidebar: #131b2e;
+  --sidebar-foreground: #f8f9ff;
   --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-accent: rgba(255, 255, 255, 0.06);
-  --sidebar-muted: #a9a0c9;
-  --radius: 0.75rem;
-  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --sidebar-accent: rgba(211, 228, 254, 0.12);
+  --sidebar-muted: #bec6e0;
+  --radius: 0.5rem;
+  --shadow-card: 0 1px 8px rgba(0, 0, 0, 0.04);
 }
 
 @theme inline {
@@ -52,6 +53,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-success: var(--success);
+  --color-info: var(--info);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-danger: var(--danger);
@@ -60,8 +62,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-muted: var(--sidebar-muted);
-  --font-sans: var(--font-plus-jakarta);
-  --font-display: var(--font-sora);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-plus-jakarta);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -81,14 +83,14 @@ body {
 body {
   background: var(--canvas);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), ui-sans-serif, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, sans-serif;
 }
 
 h1,
 h2,
 h3,
 .font-display {
-  font-family: var(--font-sora), var(--font-plus-jakarta), ui-sans-serif, sans-serif;
+  font-family: var(--font-plus-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
 }
 
 @keyframes fade-in {
