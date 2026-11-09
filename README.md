@@ -48,3 +48,4 @@ Client helpers live in `src/utils/supabase/`:
 - Supabase (`@supabase/supabase-js` + `@supabase/ssr`)
 
 See `docs/PHASE1_ARCHITECTURE.md` for the deployment and security model.
+# municipal
