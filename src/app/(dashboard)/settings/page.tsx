@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import { EmptyModule } from "@/components/shared/empty-module";
 import { PageHeader } from "@/components/shared/page-header";
@@ -49,9 +50,38 @@ async function getSupabaseStatus() {
   }
 }
 
-export default async function Page() {
+async function SupabaseConnectionStatus() {
   const status = await getSupabaseStatus();
 
+  return (
+    <div className="mt-6 space-y-2 border-t border-border/60 pt-6">
+      <p className="text-sm font-medium text-foreground">Supabase connection</p>
+      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        <Badge variant={status.ok ? "success" : "warning"}>
+          {status.ok ? "Connected" : "Check config"}
+        </Badge>
+        <span>{status.message}</span>
+        {"projectHost" in status && status.projectHost ? (
+          <span className="font-mono text-xs">{status.projectHost}</span>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function SupabaseConnectionFallback() {
+  return (
+    <div className="mt-6 space-y-2 border-t border-border/60 pt-6">
+      <p className="text-sm font-medium text-foreground">Supabase connection</p>
+      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+        <Badge variant="secondary">Checking…</Badge>
+        <span>Verifying Supabase configuration</span>
+      </div>
+    </div>
+  );
+}
+
+export default function Page() {
   return (
     <DashboardShell
       title="System Settings"
@@ -65,18 +95,9 @@ export default async function Page() {
         title="System Settings is scaffolded"
         description="Navigation and layout are in place. Domain workflows for this module will be implemented in the corresponding development phase."
       />
-      <div className="mt-6 space-y-2 border-t border-border/60 pt-6">
-        <p className="text-sm font-medium text-foreground">Supabase connection</p>
-        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          <Badge variant={status.ok ? "success" : "warning"}>
-            {status.ok ? "Connected" : "Check config"}
-          </Badge>
-          <span>{status.message}</span>
-          {"projectHost" in status && status.projectHost ? (
-            <span className="font-mono text-xs">{status.projectHost}</span>
-          ) : null}
-        </div>
-      </div>
+      <Suspense fallback={<SupabaseConnectionFallback />}>
+        <SupabaseConnectionStatus />
+      </Suspense>
     </DashboardShell>
   );
 }
